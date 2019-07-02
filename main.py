@@ -1,4 +1,3 @@
-from MainUi import MainUi
 from Earthquake_Server import *
 from PyQt5 import QtWidgets, QtCore
 import mainwindow
