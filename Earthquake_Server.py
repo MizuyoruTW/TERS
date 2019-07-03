@@ -50,11 +50,14 @@ class Earthquake_Server:
 			json.dump(self.EQs, outfile)
 	
 	def Readjson(self):
-		if os.path.exists('Earthquakes.json'):
-			with open('Earthquakes.json') as json_file:
-				self.EQs=json.load(json_file)
-		else:
-			open('Earthquakes.json', 'x')
+		try:
+			if os.path.exists('Earthquakes.json'):
+				with open('Earthquakes.json') as json_file:
+					self.EQs=json.load(json_file)
+			else:
+				open('Earthquakes.json', 'x')
+		except Exception as e:
+			print("Warning: " + type(e).__name__ + " " + e.args[0])
 	def cmp(self,a,b):
 		if a["code"] != b["code"]:
 			return False
