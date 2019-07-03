@@ -1,5 +1,5 @@
-from Earthquake_Server import Earthquake_Server
-from PyQt5 import QtWidgets, QtCore
+from Earthquake_Server import Earthquake_Server, EQtoString
+from PyQt5 import QtWidgets, QtCore, QtGui
 import mainwindow
 import time
 import sys
@@ -26,44 +26,14 @@ class littleTimer(QtCore.QThread):
 			time.sleep(1)
 		self.success.emit(True)
 
-class About(QtWidgets.QDialog):
-	def __init__(self):
-		super(About, self).__init__()
-		self.setupUi()
-	
-	def setupUi(self):
-		self.setWindowTitle("關於")
-		self.setFixedSize(200, 200)
-		
-		self.label = QtWidgets.QLabel()
-		self.label.setText("本程式由水夜工作坊製作\n資訊由中央氣象局提供")
-		self.label.setAlignment(QtCore.Qt.AlignCenter)
-		
-		self.CancelButton = QtWidgets.QPushButton()
-		self.CancelButton.setText("關閉")
-		self.CancelButton.clicked.connect(self.close)
-		
-		self.SiteLink = QtWidgets.QLabel()
-		self.SiteLink.setText("<a href='https://github.com/MizuyoruTW'>https://github.com/MizuyoruTW</a>")
-		self.SiteLink.setOpenExternalLinks(True)
-		self.SiteLink.setAlignment(QtCore.Qt.AlignCenter)
-		
-		h_layout = QtWidgets.QVBoxLayout()
-		h_layout.addWidget(self.label)
-		h_layout.addWidget(self.SiteLink)
-		h_layout.addWidget(self.CancelButton)
-		
-		self.setLayout(h_layout)
-
 class Main(QtWidgets.QMainWindow, mainwindow.Ui_MainWindow):
-	EQ=Earthquake_Server()
+	EQ=Earthquake_Server(True)
 	new_index = 1
 	def __init__(self):
 		super(Main, self).__init__()
 		self.setupUi(self)
 
 		self.about.clicked.connect(self.About_clicked)
-		self.AboutWindow = About()
 
 		self.TimeThread = littleTimer()
 		self.TimeThread.remain_sec.connect(self.Time_changed)
@@ -71,9 +41,19 @@ class Main(QtWidgets.QMainWindow, mainwindow.Ui_MainWindow):
 		self.TimeThread.start()
 
 		self.refresh.clicked.connect(self.imm_refresh)
-	
+		self.new_index = len(self.EQ.EQs) + 1
+
 	def About_clicked(self):
-		self.AboutWindow.show()
+		msgBox = QtWidgets.QMessageBox()
+		msgBox.setWindowTitle("關於")
+		msgBox.setText("本程式由水夜工作坊製作\n資訊由中央氣象局提供\n")
+		msg_layout = msgBox.layout()
+		SiteLink = QtWidgets.QLabel()
+		SiteLink.setText("<a href='https://github.com/MizuyoruTW'>https://github.com/MizuyoruTW</a>")
+		SiteLink.setOpenExternalLinks(True)
+		msg_layout.addWidget(SiteLink, 1, 0, 1, msg_layout.columnCount())
+		msgBox.show()
+		msgBox.exec()
 
 	def Time_changed(self,data):
 		self.progressBar.setValue(data)
@@ -82,11 +62,29 @@ class Main(QtWidgets.QMainWindow, mainwindow.Ui_MainWindow):
 		if data:
 			self.progressBar.setFormat("更新中")
 			self.EQ.update()
+			self.display_result()
 			self.progressBar.setFormat("剩餘%v秒")
 			self.TimeThread.start()
 
 	def imm_refresh(self):
 		self.TimeThread.stop = True
+
+	def display_result(self):
+		EQsize = len(self.EQ.EQs) + 1
+		if self.new_index != EQsize:
+			EQdetails = ""
+			msgBox = QtWidgets.QMessageBox()
+			for index in range(self.new_index,EQsize):
+				EQdetails += EQtoString(self.EQ.EQs[str(index)]) + '\n'
+			msgBox.setWindowTitle("新地震訊息")
+			msgBox.setWindowFlag(QtCore.Qt.WindowStaysOnTopHint)
+			msgBox.setIcon(QtWidgets.QMessageBox.Warning)
+			msgBox.setText("從中央氣象局接收" + str(EQsize - self.new_index +1) + "條新地震訊息")
+			msgBox.setDetailedText(EQdetails)
+			self.new_index = EQsize
+			msgBox.show()
+			msgBox.exec()
+
 
 if __name__ == "__main__":
 	app = QtWidgets.QApplication(sys.argv)
