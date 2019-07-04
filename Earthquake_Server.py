@@ -27,7 +27,7 @@ class Earthquake_Server:
 					self.add_new_value(code,td[1].string,td[4].string,td[5].string,Area,td[7].string)
 		except Exception as e:
 			if self.print_message:
-				print("[ERROR] " + type(e).__name__ + " " + e.args[0])
+				print("[ERROR] " + type(e).__name__ + " " + str(e))
 				
 	def add_new_value(self,code,time,size,depth,location,site):
 		newEQ={
