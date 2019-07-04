@@ -10,6 +10,15 @@
 2. 將地震資料儲存成 json 檔
 
 ---
+## 需求 Requirement
+Python with modules
+
+* requests
+* json
+* PyQt5
+* bs4
+
+
 ## 更新紀錄 Changelog
 * 2019/07/02 - 專案成立
 * 2019/07/04 - v1.0 釋出
