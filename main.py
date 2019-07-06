@@ -54,7 +54,7 @@ class Main(QtWidgets.QMainWindow, mainwindow.Ui_MainWindow):
 	def About_clicked(self):
 		msgBox = QtWidgets.QMessageBox()
 		msgBox.setWindowTitle("關於")
-		msgBox.setText("版本 V1.0\n本程式由水夜工作坊製作\n資訊由中央氣象局提供\n使用中央氣象局地震模組 V7\n\n使用 GPLv3 標準授權")
+		msgBox.setText("版本 V1.1\n本程式由水夜工作坊製作\n資訊由中央氣象局提供\n使用中央氣象局地震模組 V7\n\n使用 GPLv3 標準授權")
 		msg_layout = msgBox.layout()
 
 		SiteLink = QtWidgets.QLabel()
