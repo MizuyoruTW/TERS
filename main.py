@@ -1,4 +1,4 @@
-from Earthquake_Server import Earthquake_Server, EQtoString
+from Earthquake_Server import Earthquake_Server, EQtoString, getEQwebsite
 from PyQt5 import QtWidgets, QtCore, QtGui
 import mainwindow
 import time
@@ -112,10 +112,7 @@ class Main(QtWidgets.QMainWindow, mainwindow.Ui_MainWindow):
 			print("[ERROR] " + type(e).__name__ + " " + str(e))
 
 	def TableDoubleClicked(self, mi):
-		if self.EQ.EQs[str(mi.row() + 1)]["code"] == "Area":
-			webbrowser.open("https://www.cwb.gov.tw/V7/earthquake/Data/local/" + self.EQ.EQs[str(mi.row() + 1)]["site"])
-		else:
-			webbrowser.open("https://www.cwb.gov.tw/V7/earthquake/Data/quake/" + self.EQ.EQs[str(mi.row() + 1)]["site"])
+		webbrowser.open(getEQwebsite(self.EQ.EQs[str(mi.row() + 1)]))
     
 
 

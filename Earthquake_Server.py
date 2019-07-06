@@ -86,3 +86,9 @@ class Earthquake_Server:
 def EQtoString(eq):
 	EQstr="\n[" + eq["code"] + "] 於" + eq["time"] + " 在 " + eq["location"] + "發生規模 " + eq["size"] + "，深度 " + eq["depth"] + "KM 的地震\n"
 	return EQstr
+
+def getEQwebsite(eq):
+	if eq["code"] == "Area":
+		return "https://www.cwb.gov.tw/V7/earthquake/Data/local/" + eq["site"]
+	else:
+		return "https://www.cwb.gov.tw/V7/earthquake/Data/quake/" + eq["site"]
