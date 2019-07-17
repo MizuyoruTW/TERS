@@ -27,11 +27,14 @@ class Ui_MainWindow(object):
         self.tableView.setGeometry(QtCore.QRect(10, 40, 781, 481))
         self.tableView.setObjectName("tableView")
         self.about = QtWidgets.QPushButton(self.centralwidget)
-        self.about.setGeometry(QtCore.QRect(90, 10, 75, 23))
+        self.about.setGeometry(QtCore.QRect(170, 10, 75, 23))
         self.about.setObjectName("about")
         self.refresh = QtWidgets.QPushButton(self.centralwidget)
         self.refresh.setGeometry(QtCore.QRect(10, 10, 75, 23))
         self.refresh.setObjectName("refresh")
+        self.setting = QtWidgets.QPushButton(self.centralwidget)
+        self.setting.setGeometry(QtCore.QRect(90, 10, 75, 23))
+        self.setting.setObjectName("setting")
         MainWindow.setCentralWidget(self.centralwidget)
 
         self.retranslateUi(MainWindow)
@@ -39,7 +42,8 @@ class Ui_MainWindow(object):
 
     def retranslateUi(self, MainWindow):
         _translate = QtCore.QCoreApplication.translate
-        MainWindow.setWindowTitle(_translate("TERS", "台灣地震報告系統"))
-        self.progressBar.setFormat(_translate("remain %v sec", "剩餘%v秒"))
-        self.about.setText(_translate("About", "關於"))
-        self.refresh.setText(_translate("Refresh", "重新整理"))
+        MainWindow.setWindowTitle(_translate("MainWindow", "MainWindow"))
+        self.progressBar.setFormat(_translate("MainWindow", "剩餘%p秒"))
+        self.about.setText(_translate("MainWindow", "關於"))
+        self.refresh.setText(_translate("MainWindow", "重新整理"))
+        self.setting.setText(_translate("MainWindow", "設定"))

@@ -4,8 +4,9 @@ import json
 import os.path
 from bs4 import BeautifulSoup
 
+  
 
-class Earthquake_Server:
+class Earthquake_Server_v8:
 	path = "" # The path of Earthquakes.json
 
 	def __init__(self, path = ""):
@@ -16,17 +17,18 @@ class Earthquake_Server:
 	# Get data from website
 	def update(self):
 		try:
-			res = requests.get('https://www.cwb.gov.tw/V7/modules/MOD_EC_Home.htm')
+			res = requests.get('https://www.cwb.gov.tw/V8/C/E/MOD/EQ_ROW.html')
 			res.encoding="utf-8"
-			tbody = BeautifulSoup(res.text,"lxml").table.tbody
+			tbody = BeautifulSoup(res.text,"lxml")
 			for tr in tbody.findAll('tr')[::-1]:
 				td = tr.findAll('td')
-				if (len(td) == 9):
+				if (len(td) == 3):
 					code=td[0].string
 					if(code == "小區域"):
 						code="Area"
-					Area=td[6].get_text().replace('/r','')
-					self.add_new_value(code,td[1].string,td[4].string,td[5].string,Area,td[7].string)
+					li = td[2].div.a.div.ul.findAll("li")
+					Area=li[0].get_text().replace('\r','').replace("地點", "")
+					self.add_new_value(code, td[2].div.a.div.span.string, li[2].get_text().replace("地震規模", ""), li[1].get_text().replace("深度", "").replace("km", ""), Area, td[2].div.a["href"])
 		except Exception as e:
 			logging.error(type(e).__name__ + " " + str(e))
 				
@@ -45,7 +47,7 @@ class Earthquake_Server:
 				found = True
 				break
 		if not found:
-			logging.info("[Debug]New earthquake detected")
+			logging.info("New earthquake detected")
 			self.EQs[str(len(self.EQs) + 1)] = newEQ
 			self.Savejson()
 	
@@ -84,12 +86,5 @@ class Earthquake_Server:
 
 	# Get real earthquake information website
 	def getEQwebsite(self, eq):
-		if eq["code"] == "Area":
-			return "https://www.cwb.gov.tw/V7/earthquake/Data/local/" + eq["site"]
-		else:
-			return "https://www.cwb.gov.tw/V7/earthquake/Data/quake/" + eq["site"]
+		return "https://www.cwb.gov.tw" + eq["site"]
 #End of Class
-
-def EQtoString(eq):
-	EQstr="\n[" + eq["code"] + "] 於" + eq["time"] + " 在 " + eq["location"] + "發生規模 " + eq["size"] + "，深度 " + eq["depth"] + "KM 的地震\n"
-	return EQstr

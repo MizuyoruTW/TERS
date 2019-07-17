@@ -23,3 +23,4 @@ Python with modules
 * 2019/07/02 - 專案成立
 * 2019/07/04 - v1.0 釋出
 * 2019/07/06 - V1.1 earthquake module v7
+* 2019/07/17 - v2.0 釋出 預設使用earthquake module v8
