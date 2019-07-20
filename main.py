@@ -74,7 +74,6 @@ class SettingWindow(QtWidgets.QDialog, setting.Ui_Dialog):
 class Main(QtWidgets.QMainWindow, mainwindow.Ui_MainWindow):
 	new_index = 1 # the number of old earthquake
 	module_version = ""
-	version = "2.0"
 
 	def __init__(self):
 		super(Main, self).__init__()
@@ -105,7 +104,7 @@ class Main(QtWidgets.QMainWindow, mainwindow.Ui_MainWindow):
 		# About window
 		msgBox = QtWidgets.QMessageBox()
 		msgBox.setWindowTitle("關於")
-		msgBox.setText("版本 V" + self.version + "\n本程式由水夜工作坊製作\n資訊由中央氣象局提供\n使用中央氣象局地震模組 V7, V8\n\n使用 GPLv3 標準授權")
+		msgBox.setText("版本 V" + thisversion + "\n本程式由水夜工作坊製作\n資訊由中央氣象局提供\n使用中央氣象局地震模組 V7, V8\n\n使用 GPLv3 標準授權")
 		msg_layout = msgBox.layout()
 
 		SiteLink = QtWidgets.QLabel()
