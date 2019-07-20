@@ -28,7 +28,7 @@ class Earthquake_Server_v8:
 						code="Area"
 					li = td[2].div.a.div.ul.findAll("li")
 					Area=li[0].get_text().replace('\r','').replace("地點", "")
-					self.add_new_value(code, td[2].div.a.div.span.string, li[2].get_text().replace("地震規模", ""), li[1].get_text().replace("深度", "").replace("km", ""), Area, td[2].div.a["href"])
+					self.add_new_value(code, td[2].div.a.div.span.get_text(), li[2].get_text().replace("地震規模", ""), li[1].get_text().replace("深度", "").replace("km", ""), Area, td[2].div.a["href"])
 		except Exception as e:
 			logging.error(type(e).__name__ + " " + str(e))
 				

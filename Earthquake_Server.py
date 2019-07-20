@@ -45,7 +45,7 @@ class Earthquake_Server:
 				found = True
 				break
 		if not found:
-			logging.info("[Debug]New earthquake detected")
+			logging.info("New earthquake detected")
 			self.EQs[str(len(self.EQs) + 1)] = newEQ
 			self.Savejson()
 	

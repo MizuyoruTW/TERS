@@ -11,7 +11,7 @@ import configparser
 import os
 
 logging.basicConfig(level=logging.DEBUG, format='%(asctime)s - %(levelname)s : %(message)s', filename="TERS.log")
-thisVersion = "2.0"
+thisVersion = "2.1"
 path = ""
 
 # A timer for interval
