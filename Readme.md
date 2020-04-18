@@ -16,7 +16,7 @@ Python with modules
 * requests
 * json
 * PyQt5
-* bs4
+* bs4 
 
 
 ## 更新紀錄 Changelog
@@ -25,3 +25,4 @@ Python with modules
 * 2019/07/06 - V1.1 earthquake module v7
 * 2019/07/17 - v2.0 釋出 預設使用earthquake module v8
 * 2019/07/20 - v2.1 fix bugs
+* 2020/04/18 - v2.1 earthquake module v7 已停用，最後使用 3/26
